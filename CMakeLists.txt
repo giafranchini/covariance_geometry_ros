@@ -13,27 +13,49 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(Eigen3 REQUIRED)
-find_package(covariance_geometry_cpp REQUIRED)
+# find_package(covariance_geometry_cpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 
-include_directories(${EIGEN3_INCLUDE_DIRS})
+include(ExternalProject)
+find_package(Git REQUIRED)
+
+ExternalProject_Add(
+  covariance_geometry_cpp
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp
+  GIT_REPOSITORY https://github.com/andreaostuni/covariance_geometry.git
+  TIMEOUT 10
+  UPDATE_COMMAND ${GIT_EXECUTABLE} pull
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src
+  LOG_DOWNLOAD ON
+)
+
 add_definitions(${EIGEN3_DEFINITIONS})
 
-include_directories(include)
+include_directories(
+  include
+  ${EIGEN3_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_ros/covariance_geometry_cpp/src/covariance_geometry_cpp/include
+)
 
 add_library(${PROJECT_NAME} SHARED src/covariance_geometry_ros.cpp)
 target_include_directories(
   ${PROJECT_NAME} 
   PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-  "$<INSTALL_INTERFACE:include>")
+  "$<INSTALL_INTERFACE:include>"
+)
+
+add_dependencies(
+  ${PROJECT_NAME}
+  covariance_geometry_cpp
+)
+
 ament_target_dependencies(
   ${PROJECT_NAME}
   Eigen3
-  covariance_geometry_cpp
   geometry_msgs
-  tf2_ros)
-# target_link_libraries(${PROJECT_NAME} covariance_geometry_cpp)
+  tf2_ros
+)
 
 install(
   TARGETS ${PROJECT_NAME}
@@ -42,16 +64,19 @@ install(
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
   INCLUDES
-  DESTINATION include)
+  DESTINATION include
+)
 
 install(DIRECTORY include/ DESTINATION include)
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
+
 ament_export_dependencies( 
   Eigen3
   covariance_geometry_cpp
   geometry_msgs
-  tf2_ros)
+  tf2_ros
+)
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
@@ -62,14 +87,19 @@ if(BUILD_TESTING)
     conversion_test
     # composition_test
     )
+  
   foreach(TEST_NAME ${TEST_NAMES})
     ament_add_gtest(${TEST_NAME} test/${TEST_NAME}.cpp)
     ament_target_dependencies(
       ${TEST_NAME}
       Eigen3
-      covariance_geometry_cpp
       geometry_msgs
-      tf2_ros)
+      tf2_ros
+    )
+    add_dependencies(
+      ${TEST_NAME}
+      covariance_geometry_cpp
+    )
   endforeach()
 endif()
 
