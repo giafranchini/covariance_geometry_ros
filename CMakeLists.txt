@@ -13,7 +13,6 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(Eigen3 REQUIRED)
-# find_package(covariance_geometry_cpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 
@@ -50,6 +49,11 @@ add_dependencies(
   covariance_geometry_cpp
 )
 
+target_link_libraries(
+  ${PROJECT_NAME}
+  ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/libcovariance_geometry_cpp.so
+)
+
 ament_target_dependencies(
   ${PROJECT_NAME}
   Eigen3
@@ -68,6 +72,7 @@ install(
 )
 
 install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/ DESTINATION lib)
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
