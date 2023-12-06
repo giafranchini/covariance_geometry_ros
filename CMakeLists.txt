@@ -6,7 +6,7 @@ if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
 endif()
 
-# Default to C++20
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
@@ -34,13 +34,14 @@ add_definitions(${EIGEN3_DEFINITIONS})
 include_directories(
   include
   ${EIGEN3_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_ros/covariance_geometry_cpp/src/covariance_geometry_cpp/include
+  ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/include
 )
 
 add_library(${PROJECT_NAME} SHARED src/covariance_geometry_ros.cpp)
 target_include_directories(
   ${PROJECT_NAME} 
-  PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  PUBLIC 
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>"
 )
 
@@ -95,16 +96,24 @@ if(BUILD_TESTING)
   
   foreach(TEST_NAME ${TEST_NAMES})
     ament_add_gtest(${TEST_NAME} test/${TEST_NAME}.cpp)
+
+    add_dependencies(
+      ${TEST_NAME}
+      covariance_geometry_cpp
+    )
+
+    target_link_libraries(
+      ${TEST_NAME}
+      ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/libcovariance_geometry_cpp.so
+    )
+
     ament_target_dependencies(
       ${TEST_NAME}
       Eigen3
       geometry_msgs
       tf2_ros
     )
-    add_dependencies(
-      ${TEST_NAME}
-      covariance_geometry_cpp
-    )
+
   endforeach()
 endif()
 
