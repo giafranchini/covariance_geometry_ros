@@ -11,6 +11,8 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
 
+add_compile_options(-Wall -Wextra -Wpedantic)
+
 find_package(ament_cmake REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(geometry_msgs REQUIRED)
