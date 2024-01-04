@@ -23,10 +23,10 @@ namespace covariance_geometry
 {
 
 const Eigen::Vector3d coord = {0.111, -1.24, 0.35};                               // x, y, z
-const Eigen::Vector3d rpy = {0.9067432, 0.4055079, 0.1055943};                    // roll, pitch, yaw
+const Eigen::Vector3d rpy = {0.9067432, 0.4055079, 0.1055943};                    // r, p, y
 const Eigen::Quaterniond quat = {0.8746791, 0.4379822, 0.1581314, 0.1345454};     // w, x, y, z
 
-const Eigen::Vector3d rpy_gl = {0.12, M_PI_2, 0.34};                              // roll, pitch, yaw
+const Eigen::Vector3d rpy_gl = {0.12, M_PI_2, 0.34};                              // r, p, y
 const Eigen::Quaterniond quat_gl = {0.6884861, 0.1612045, 0.6884861, 0.1612045};  // w, x, y, z
 
 TEST(Composition, ROSPoses)
