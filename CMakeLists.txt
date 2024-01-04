@@ -19,7 +19,7 @@ find_package(tf2_ros REQUIRED)
 include(ExternalProject)
 find_package(Git REQUIRED)
 
-ExternalProject_Add(
+externalproject_add(
   covariance_geometry_cpp
   PREFIX ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp
   GIT_REPOSITORY https://github.com/andreaostuni/covariance_geometry.git
@@ -39,8 +39,8 @@ include_directories(
 
 add_library(${PROJECT_NAME} SHARED src/covariance_geometry_ros.cpp)
 target_include_directories(
-  ${PROJECT_NAME} 
-  PUBLIC 
+  ${PROJECT_NAME}
+  PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>"
 )
@@ -78,7 +78,7 @@ install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/ D
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
-ament_export_dependencies( 
+ament_export_dependencies(
   Eigen3
   covariance_geometry_cpp
   geometry_msgs
@@ -89,12 +89,12 @@ if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
-  
+
   set(TEST_NAMES
     conversion_test
     # composition_test
-    )
-  
+  )
+
   foreach(TEST_NAME ${TEST_NAMES})
     ament_add_gtest(${TEST_NAME} test/${TEST_NAME}.cpp)
 
