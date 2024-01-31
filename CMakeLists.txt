@@ -20,6 +20,7 @@ externalproject_add(
   covariance_geometry_cpp
   PREFIX ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp
   GIT_REPOSITORY https://github.com/andreaostuni/covariance_geometry.git
+  GIT_TAG master
   TIMEOUT 10
   UPDATE_COMMAND ${GIT_EXECUTABLE} pull
   CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src

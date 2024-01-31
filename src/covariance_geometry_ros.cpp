@@ -84,7 +84,7 @@ void inverseCompose(
   fromROS(a, pose_a);
   fromROS(b, pose_b);
   ComposePoseQuaternionCovarianceRPY(
-    pose_a, inversePose3DQuaternionCovarianceRPY(pose_b), pose_out);
+    pose_a, InversePose3DQuaternionCovarianceRPY(pose_b), pose_out);
   toROS(pose_out, out);
 }
 
@@ -108,7 +108,7 @@ void inverseCompose(
   PoseQuaternionCovarianceRPY pose_b, pose_out;
   fromROS(a, pose_a);
   fromROS(b, pose_b);
-  pose_b = inversePose3DQuaternionCovarianceRPY(pose_b);
+  pose_b = InversePose3DQuaternionCovarianceRPY(pose_b);
   ComposePose3DQuaternion(
     pose_a, pose_b.first,
     pose_out.first);
