@@ -8,7 +8,6 @@
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <build_depend>covariance_geometry</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>tf2_ros</build_depend>
 
