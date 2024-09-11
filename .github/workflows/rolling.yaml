@@ -31,7 +31,7 @@ jobs:
         target-ros2-distro: rolling
 
     - name: Upload Logs
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: colcon-logs
         path: ros_ws/log
