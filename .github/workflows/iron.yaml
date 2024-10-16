@@ -16,10 +16,10 @@ jobs:
     steps:
     - name: Update
       timeout-minutes: 2
-      run: apt update
+      run: apt-get update
 
     - name: Install PIP
-      run: apt install -y python3-pip lcov
+      run: apt-get install -y python3-pip lcov
 
     - name: Install colcon tools
       run: python3 -m pip install colcon-lcov-result colcon-coveragepy-result
