@@ -8,6 +8,7 @@ on:
 
 jobs:
   Build:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     container:
       image: osrf/ros:iron-desktop-full-jammy
