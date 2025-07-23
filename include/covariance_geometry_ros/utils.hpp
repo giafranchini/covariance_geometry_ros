@@ -15,7 +15,8 @@
 #define COVARIANCE_GEOMETRY_ROS__UTILS_HPP_
 
 #include <eigen3/Eigen/Core>
-
+#include <covariance_geometry/pose_representation.hpp>
+#include <covariance_geometry/pose_covariance_representation.hpp>
 #include <geometry_msgs/msg/pose.hpp>
 #include <geometry_msgs/msg/pose_with_covariance.hpp>
 
