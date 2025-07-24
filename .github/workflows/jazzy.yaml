@@ -1,4 +1,4 @@
-name: Ubuntu 24.04 Rolling Build
+name: Ubuntu 22.04 Jazzy Build
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     container:
-      image: osrf/ros:rolling-desktop-full
+      image: osrf/ros:jazzy-desktop-full
 
     steps:
     - name: Update
@@ -25,13 +25,7 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Run Tests
-      uses: ros-tooling/action-ros-ci@0.3.16
+      uses: ros-tooling/action-ros-ci@0.4.4
       with:
-        target-ros2-distro: rolling
-
-    - name: Upload Logs
-      uses: actions/upload-artifact@v4
-      with:
-        name: colcon-logs
-        path: ros_ws/log
-      if: failure()
+        target-ros2-distro: jazzy
+        coverage-result: false

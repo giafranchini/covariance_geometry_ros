@@ -28,19 +28,13 @@ externalproject_add(
   LOG_DOWNLOAD ON
 )
 
-add_definitions(${EIGEN3_DEFINITIONS})
-
-include_directories(
-  include
-  ${EIGEN3_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/include
-)
-
 add_library(${PROJECT_NAME} SHARED src/covariance_geometry_ros.cpp)
+
 target_include_directories(
   ${PROJECT_NAME}
   PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/include>"
   "$<INSTALL_INTERFACE:include>"
 )
 
@@ -51,15 +45,12 @@ add_dependencies(
 
 target_link_libraries(
   ${PROJECT_NAME}
-  ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/libcovariance_geometry_cpp.so
-)
-
-ament_target_dependencies(
-  ${PROJECT_NAME}
-  Eigen3
-  geometry_msgs
-  tf2
-  tf2_geometry_msgs
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/libcovariance_geometry_cpp.so>"
+  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/lib/libcovariance_geometry_cpp.so>"
+  Eigen3::Eigen
+  tf2::tf2
+  ${geometry_msgs_TARGETS}
+  ${tf2_geometry_msgs_TARGETS}
 )
 
 install(
@@ -68,13 +59,19 @@ install(
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
-  INCLUDES
-  DESTINATION include
+  INCLUDES DESTINATION include
 )
 
-install(DIRECTORY include/ DESTINATION include)
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/include/ DESTINATION include)
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/ DESTINATION lib)
+install(
+  DIRECTORY
+  include/
+  ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/include/
+  DESTINATION include
+)
+install(
+  DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/
+  DESTINATION lib
+)
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
