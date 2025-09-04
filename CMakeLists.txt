@@ -50,7 +50,7 @@ target_link_libraries(
   Eigen3::Eigen
   tf2::tf2
   ${geometry_msgs_TARGETS}
-  ${tf2_geometry_msgs_TARGETS}
+  tf2_geometry_msgs::tf2_geometry_msgs
 )
 
 install(
