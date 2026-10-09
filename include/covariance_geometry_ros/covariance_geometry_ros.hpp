@@ -14,7 +14,7 @@
 #ifndef COVARIANCE_GEOMETRY_ROS__COVARIANCE_GEOMETRY_ROS_HPP_
 #define COVARIANCE_GEOMETRY_ROS__COVARIANCE_GEOMETRY_ROS_HPP_
 
-#include <tf2/LinearMath/Transform.h>
+#include <tf2/LinearMath/Transform.hpp>
 
 #include <geometry_msgs/msg/pose.hpp>
 #include <geometry_msgs/msg/pose_with_covariance.hpp>

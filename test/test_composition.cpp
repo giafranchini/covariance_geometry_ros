@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <tf2/LinearMath/Transform.h>
+#include <tf2/LinearMath/Transform.hpp>
 
 #include <geometry_msgs/msg/pose_with_covariance.hpp>
 #include "covariance_geometry/pose_representation.hpp"
