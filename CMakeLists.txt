@@ -49,7 +49,7 @@ target_link_libraries(
   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/lib/libcovariance_geometry_cpp.so>"
   Eigen3::Eigen
   tf2::tf2
-  ${geometry_msgs_TARGETS}
+  geometry_msgs::geometry_msgs
   tf2_geometry_msgs::tf2_geometry_msgs
 )
 
