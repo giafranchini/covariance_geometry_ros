@@ -45,11 +45,13 @@ add_dependencies(
 
 target_link_libraries(
   ${PROJECT_NAME}
+  PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/libcovariance_geometry_cpp.so>"
   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/lib/libcovariance_geometry_cpp.so>"
   Eigen3::Eigen
   tf2::tf2
   geometry_msgs::geometry_msgs
+  PRIVATE
   tf2_geometry_msgs::tf2_geometry_msgs
 )
 
@@ -80,7 +82,6 @@ ament_export_dependencies(
   covariance_geometry_cpp
   geometry_msgs
   tf2
-  tf2_geometry_msgs
 )
 
 if(BUILD_TESTING)

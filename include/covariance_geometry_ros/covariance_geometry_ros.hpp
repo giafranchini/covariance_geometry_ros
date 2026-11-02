@@ -18,7 +18,6 @@
 
 #include <geometry_msgs/msg/pose.hpp>
 #include <geometry_msgs/msg/pose_with_covariance.hpp>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 
 using Pose = geometry_msgs::msg::Pose;
 using PoseWithCovariance = geometry_msgs::msg::PoseWithCovariance;
