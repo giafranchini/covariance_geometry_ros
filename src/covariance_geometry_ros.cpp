@@ -16,9 +16,9 @@
 #include "covariance_geometry/pose_covariance_representation.hpp"
 
 #include "covariance_geometry_ros/covariance_geometry_ros.hpp"
+#include "covariance_geometry_ros/utils.hpp"
 #include "tf2/LinearMath/Transform.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
-#include "covariance_geometry_ros/utils.hpp"
 
 namespace covariance_geometry
 {

@@ -8,8 +8,8 @@
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <buildtool_depend>git</buildtool_depend>
 
+  <depend>covariance_geometry_cpp</depend>
   <depend>eigen</depend>
   <depend>geometry_msgs</depend>
   <depend>tf2</depend>

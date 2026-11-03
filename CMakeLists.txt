@@ -9,24 +9,11 @@ endif()
 add_compile_options(-Wall -Wextra -Wpedantic -Wconversion -Wdouble-promotion -Wfloat-equal -Wshadow)
 
 find_package(ament_cmake REQUIRED)
+find_package(covariance_geometry_cpp REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
-
-include(ExternalProject)
-find_package(Git REQUIRED)
-
-externalproject_add(
-  covariance_geometry_cpp
-  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp
-  GIT_REPOSITORY https://github.com/andreaostuni/covariance_geometry.git
-  GIT_TAG master
-  TIMEOUT 10
-  UPDATE_COMMAND ${GIT_EXECUTABLE} pull
-  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src
-  LOG_DOWNLOAD ON
-)
 
 add_library(${PROJECT_NAME} SHARED src/covariance_geometry_ros.cpp)
 
@@ -34,20 +21,13 @@ target_include_directories(
   ${PROJECT_NAME}
   PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/include>"
   "$<INSTALL_INTERFACE:include>"
-)
-
-add_dependencies(
-  ${PROJECT_NAME}
-  covariance_geometry_cpp
 )
 
 target_link_libraries(
   ${PROJECT_NAME}
   PUBLIC
-  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/libcovariance_geometry_cpp.so>"
-  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/lib/libcovariance_geometry_cpp.so>"
+  covariance_geometry_cpp::covariance_geometry_cpp
   Eigen3::Eigen
   tf2::tf2
   geometry_msgs::geometry_msgs
@@ -64,22 +44,13 @@ install(
   INCLUDES DESTINATION include
 )
 
-install(
-  DIRECTORY
-  include/
-  ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/include/
-  DESTINATION include
-)
-install(
-  DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/covariance_geometry_cpp/src/lib/
-  DESTINATION lib
-)
+install(DIRECTORY include/ DESTINATION include)
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
 ament_export_dependencies(
-  Eigen3
   covariance_geometry_cpp
+  Eigen3
   geometry_msgs
   tf2
 )
